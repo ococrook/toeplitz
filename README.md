@@ -3,6 +3,7 @@
 A C++ package for high-performance linear algebra with Toeplitz matrices.
 
 Author: Oliver M. Crook
+
 email: omc25@cam.ac.uk
 
 This is an ongoing project: 
