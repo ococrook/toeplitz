@@ -87,3 +87,37 @@ arma::mat trenchInvcpp(arma::vec v) {
   return(trenchInv) ; 
   
 }
+
+//' An RcppArmadillo function to compute the
+//' inverse of a tensor decomposed Toeplitz matrix. (b*I_{nd} + J_n tensor A)
+//' For toeplitz A
+//'
+//' @param b The magnitude of the ridge added to the tensor decomposition
+//' @param n an Integer of the size of the tensor decomposition
+//' @param c A numeric vector, which is the first row of the Toeplitz matrix A
+//' @return The inverse of the tensor decomposed Toeplitz matrix
+// [[Rcpp::export]]
+arma::mat tensortoeplitz(double b,
+                         int n,
+                         arma::vec c){
+  
+  List trenchres = List::create(Rcpp::Named("logdet"),
+                                Rcpp::Named("z"),
+                                Rcpp::Named("v"));
+  int D = c.size();
+  arma::vec q(D);
+  arma::vec v(D);
+  arma::mat Z(D, D);
+  arma::mat J = arma::ones(n, n);
+  arma::mat eye = arma::eye(D, D);
+  arma::mat tensortoeplitz;
+  
+  q = n * c / b;
+  q(0) = q(0) + 1;  
+  trenchres = trenchDetcpp(q);
+  v = as<arma::vec>(trenchres["v"]);
+  Z = trenchInvcpp(v);
+  tensortoeplitz = (arma::eye(D * n , D * n) / b)  - arma::kron(J, eye - Z)/(b * n);
+  
+  return(tensortoeplitz);  
+}    

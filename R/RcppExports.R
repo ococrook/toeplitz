@@ -24,3 +24,15 @@ trenchInvcpp <- function(v) {
     .Call('_toeplitz_trenchInvcpp', PACKAGE = 'toeplitz', v)
 }
 
+#' An RcppArmadillo function to compute the
+#' inverse of a tensor decomposed Toeplitz matrix. (b*I_{nd} + J_n tensor A)
+#' For toeplitz A
+#'
+#' @param b The magnitude of the ridge added to the tensor decomposition
+#' @param n an Integer of the size of the tensor decomposition
+#' @param c A numeric vector, which is the first row of the Toeplitz matrix A
+#' @return The inverse of the tensor decomposed Toeplitz matrix
+tensortoeplitz <- function(b, n, c) {
+    .Call('_toeplitz_tensortoeplitz', PACKAGE = 'toeplitz', b, n, c)
+}
+

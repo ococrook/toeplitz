@@ -38,11 +38,25 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// tensortoeplitz
+arma::mat tensortoeplitz(double b, int n, arma::vec c);
+RcppExport SEXP _toeplitz_tensortoeplitz(SEXP bSEXP, SEXP nSEXP, SEXP cSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type b(bSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type c(cSEXP);
+    rcpp_result_gen = Rcpp::wrap(tensortoeplitz(b, n, c));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_toeplitz_rcpp_hello_world", (DL_FUNC) &_toeplitz_rcpp_hello_world, 0},
     {"_toeplitz_trenchDetcpp", (DL_FUNC) &_toeplitz_trenchDetcpp, 1},
     {"_toeplitz_trenchInvcpp", (DL_FUNC) &_toeplitz_trenchInvcpp, 1},
+    {"_toeplitz_tensortoeplitz", (DL_FUNC) &_toeplitz_tensortoeplitz, 3},
     {NULL, NULL, 0}
 };
 
